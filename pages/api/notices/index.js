@@ -1,6 +1,22 @@
 import { prisma } from "../../../lib/prisma";
 
 export default async function handler(req, res) {
+    if (req.method === "GET") {
+    try {
+      console.log("Attempting DB connection...");
+      const notices = await prisma.notice.findMany({
+        orderBy: [
+          { priority: "desc" },
+          { publishDate: "desc" },
+        ],
+      });
+      console.log("DB success:", notices);
+      return res.status(200).json(notices);
+    } catch (error) {
+      console.error("DB ERROR FULL:", error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
   if (req.method === "GET") {
     try {
       const notices = await prisma.notice.findMany({
