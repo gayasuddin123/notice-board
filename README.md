@@ -1,40 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Notice Board — Reno Platforms Web Dev Assignment
 
-## Getting Started
+A full-stack Notice Board application with complete CRUD operations, built with Next.js, Prisma, and TiDB Cloud.
 
-First, run the development server:
+## Live Demo
 
-```bash
+[https://notice-board-xi.vercel.app/](https://notice-board-xi.vercel.app/)
+
+## Tech Stack
+
+- **Framework:** Next.js (Pages Router)
+- **Database ORM:** Prisma
+- **Database:** TiDB Cloud (MySQL-compatible, hosted)
+- **Hosting:** Vercel
+- **Styling:** Tailwind CSS
+
+## Features
+
+- Create, read, update, and delete notices
+- Urgent notices always appear above Normal notices (sorted in database query)
+- Red "Urgent" badge on urgent notices
+- Responsive design for both mobile and desktop
+- Server-side input validation on all API routes
+- Confirmation dialog before deleting a notice
+- Optional image URL support for notices
+- Categories: Exam, Event, General
+- Priority levels: Normal, Urgent
+
+## How to Run Locally
+
+### 1. Clone the repository
+
+\`\`\`bash
+git clone https://github.com/gayasuddin123/notice-board.git
+cd notice-board
+\`\`\`
+
+### 2. Install dependencies
+
+\`\`\`bash
+npm install
+\`\`\`
+
+### 3. Set up environment variables
+
+Create a `.env` file in the project root:
+
+\`\`\`
+DATABASE_URL=your_tidb_connection_string
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+\`\`\`
+
+### 4. Generate Prisma client and sync database
+
+\`\`\`bash
+npx prisma generate
+npx prisma db push
+\`\`\`
+
+### 5. Start the development server
+
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Project Structure
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+\`\`\`
+notice-board/
+├── components/
+│   └── NoticeForm.js        # Reusable form for create and edit
+├── lib/
+│   └── prisma.js            # Prisma client singleton
+├── pages/
+│   ├── api/
+│   │   └── notices/
+│   │       ├── index.js     # GET all, POST create
+│   │       └── [id].js      # GET one, PUT update, DELETE
+│   ├── notices/
+│   │   ├── new.js           # Add notice page
+│   │   └── [id]/
+│   │       └── edit.js      # Edit notice page
+│   └── index.js             # Notice board listing page
+├── prisma/
+│   └── schema.prisma        # Database schema
+├── prisma.config.ts         # Prisma v7 configuration
+└── .env                     # Environment variables
+\`\`\`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## API Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | /api/notices | Fetch all notices (Urgent first) |
+| POST | /api/notices | Create a new notice |
+| GET | /api/notices/:id | Fetch a single notice |
+| PUT | /api/notices/:id | Update a notice |
+| DELETE | /api/notices/:id | Delete a notice |
 
-## Learn More
+## One Thing I Would Improve With More Time
 
-To learn more about Next.js, take a look at the following resources:
+I would add proper image file upload support using Cloudinary instead of asking users to paste an image URL. This would make the experience much more intuitive — users could upload directly from their device. I would also add toast notifications to replace the browser's default alert and confirm dialogs for a more polished feel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## AI Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+I used Claude (by Anthropic) as a coding assistant throughout this project. Specifically:
 
-## Deploy on Vercel
+- Generating boilerplate code for API routes and the Prisma schema
+- Setting up Tailwind CSS component styling
+- Debugging Prisma v7 breaking changes — the new `prisma.config.ts` requirement and driver adapter setup
+- Fixing TiDB Cloud SSL connection configuration for both local development and Vercel deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+All code was reviewed, understood, and tested by me. The core decisions — project structure, API design, sorting logic, form architecture, and deployment configuration — were made by me. I also debugged several issues hands-on, including the Prisma v7 adapter errors, TiDB SSL requirements, and Vercel serverless connection timeouts.
