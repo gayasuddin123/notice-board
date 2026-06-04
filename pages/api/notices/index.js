@@ -17,20 +17,6 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: error.message });
     }
   }
-  if (req.method === "GET") {
-    try {
-      const notices = await prisma.notice.findMany({
-        orderBy: [
-          { priority: "desc" },
-          { publishDate: "desc" },
-        ],
-      });
-      return res.status(200).json(notices);
-    } catch (error) {
-      return res.status(500).json({ error: "Failed to fetch notices" });
-    }
-  }
-
   if (req.method === "POST") {
     const { title, body, category, priority, publishDate, image } = req.body;
 

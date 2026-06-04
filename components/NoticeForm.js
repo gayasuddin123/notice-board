@@ -24,9 +24,7 @@ export default function NoticeForm({ initial = {}, onSubmit, submitLabel }) {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const res = await onSubmit(form);
-
     if (res.ok) {
       router.push("/");
     } else {
@@ -39,56 +37,66 @@ export default function NoticeForm({ initial = {}, onSubmit, submitLabel }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       {error && (
-        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">
-          {error}
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+          ⚠️ {error}
         </div>
       )}
 
+      {/* Title */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+          Title <span className="text-red-500">*</span>
+        </label>
         <input
           name="title"
           value={form.title}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white"
           placeholder="Enter notice title"
         />
       </div>
 
+      {/* Body */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Body *</label>
+        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+          Body <span className="text-red-500">*</span>
+        </label>
         <textarea
           name="body"
           value={form.body}
           onChange={handleChange}
           rows={4}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          placeholder="Enter notice details"
+          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white resize-none"
+          placeholder="Enter notice details..."
         />
       </div>
 
+      {/* Category & Priority */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+            Category <span className="text-red-500">*</span>
+          </label>
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white"
           >
             <option value="General">General</option>
             <option value="Exam">Exam</option>
             <option value="Event">Event</option>
           </select>
         </div>
-
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Priority *</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+            Priority <span className="text-red-500">*</span>
+          </label>
           <select
             name="priority"
             value={form.priority}
             onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white"
           >
             <option value="Normal">Normal</option>
             <option value="Urgent">Urgent</option>
@@ -96,42 +104,50 @@ export default function NoticeForm({ initial = {}, onSubmit, submitLabel }) {
         </div>
       </div>
 
+      {/* Publish Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Publish Date *</label>
+        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+          Publish Date <span className="text-red-500">*</span>
+        </label>
         <input
           type="date"
           name="publishDate"
           value={form.publishDate}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white"
         />
       </div>
 
+      {/* Image URL */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Image URL <span className="text-gray-400">(optional)</span>
+        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+          Image URL
+          <span className="ml-2 text-xs font-normal text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+            optional
+          </span>
         </label>
         <input
           name="image"
           value={form.image}
           onChange={handleChange}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition bg-gray-50 focus:bg-white"
           placeholder="https://example.com/image.jpg"
         />
       </div>
 
+      {/* Buttons */}
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 text-sm font-medium disabled:opacity-50"
+          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 shadow"
         >
           {loading ? "Saving..." : submitLabel}
         </button>
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 text-sm font-medium"
+          className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-semibold transition-colors"
         >
           Cancel
         </button>
