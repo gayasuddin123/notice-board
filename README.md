@@ -67,27 +67,27 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
-\`\`\`
+```
 notice-board/
 ├── components/
-│   └── NoticeForm.js        # Reusable form for create and edit
+│   └── NoticeForm.js        
 ├── lib/
-│   └── prisma.js            # Prisma client singleton
+│   └── prisma.js            
 ├── pages/
 │   ├── api/
 │   │   └── notices/
-│   │       ├── index.js     # GET all, POST create
-│   │       └── [id].js      # GET one, PUT update, DELETE
+│   │       ├── index.js     
+│   │       └── [id].js      
 │   ├── notices/
-│   │   ├── new.js           # Add notice page
+│   │   ├── new.js           
 │   │   └── [id]/
-│   │       └── edit.js      # Edit notice page
-│   └── index.js             # Notice board listing page
+│   │       └── edit.js      
+│   └── index.js             
 ├── prisma/
-│   └── schema.prisma        # Database schema
-├── prisma.config.ts         # Prisma v7 configuration
-└── .env                     # Environment variables
-\`\`\`
+│   └── schema.prisma        
+├── prisma.config.ts         
+└── .env                     
+```
 
 ## API Routes
 
